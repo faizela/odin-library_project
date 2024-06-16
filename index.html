@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Stoic Library</title>
+    <script src="scripts.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>The Stoic Library</h1>
+        <button id="add_book_btn">Add new Book</button>
+    </header>
+    
+    <div id="cards_container"></div>
+    
+    <main>
+        <dialog id="dialog">
+            <form id="book_form">
+                <label for="book">Book:</label>
+                <input type="text" id="book" name="book" required>
+                
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" required>
+                
+                <label for="year">Year:</label>
+                <input type="number" id="year" name="year" required min="1800" max="2024">
+                
+                <label for="Book-status">Status:</label>
+                <select name="Book-status" id="Book-status" required>
+                    <option value="" selected disabled hidden>Book-status</option>
+                    <option value="To-Read">To Read</option>
+                    <option value="Reading">Reading</option>
+                    <option value="Finished">Finished</option>
+                </select>
+                
+                <button id="submit" type="submit">Submit</button>
+            </form>
+        </dialog>   
+    </main>
+</body>
+</html>
