@@ -1,9 +1,10 @@
 // Define the Book constructor function
-function Book(title, author, year, status) {
+function Book(title, author, year, status, removebtn) {
   this.title = title;
   this.author = author;
   this.year = year;
   this.status = status;
+  this.removebtn = removebtn
 }
 
 // Initial book instances
@@ -18,6 +19,9 @@ const submit = document.getElementById('submit');
 const cards_Container = document.getElementById('cards_container');
 const book_form = document.getElementById('book_form');
 
+
+
+
 // Function to add a book to the library and update the display
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -28,7 +32,12 @@ function addBookToLibrary(book) {
 function addBooksToCards() {
   cards_Container.innerHTML = ''; // Clear previous cards
 
-  myLibrary.forEach((book) => {
+function removeBookFromLibrary (index) {
+  myLibrary.splice(index, 1)
+  addBooksToCards()
+}  
+
+  myLibrary.forEach((book, index) => {
       const card = document.createElement('div');
       card.classList.add('card'); // Changed class name to singular for consistency
 
@@ -44,10 +53,20 @@ function addBooksToCards() {
       const status = document.createElement('p');
       status.textContent = `Status: ${book.status}`;
 
+      const removebtn = document.createElement('button');
+      removebtn.classList.add('removebtn')
+      removebtn.textContent = `Remove Card`;
+      removebtn.dataset.id = index
+      removebtn.addEventListener('click', (e) =>  {
+      e.stopPropagation()
+      removeBookFromLibrary(index)
+      })
+
       card.appendChild(title);
       card.appendChild(author);
       card.appendChild(year);
       card.appendChild(status);
+      card.appendChild(removebtn)
       cards_Container.appendChild(card);
   });
 }
@@ -65,10 +84,16 @@ submit.addEventListener('click', (e) => {
   e.preventDefault();
   const title = document.getElementById('book').value;
   const author = document.getElementById('author').value;
-  const year = document.getElementById('year').value;
+  const year = parseInt(document.getElementById('year').value, 10);
   const status = document.getElementById('Book-status').value;
+ 
+ if  (year < 50 || year > 2024) {
+  alert('Enter a year number between 50 or 2024')
+  return
+ }
 
-  if (title && author && year && status) {
+
+  if (title && author && year  && status) {
       const newBook = new Book(title, author, year, status);
       addBookToLibrary(newBook);
       dialog.close();
@@ -78,3 +103,4 @@ submit.addEventListener('click', (e) => {
 
 // Initial display of books
 addBooksToCards();
+
